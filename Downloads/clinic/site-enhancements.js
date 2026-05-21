@@ -194,7 +194,25 @@
             return;
         }
 
+        var navHome = {
+            parent: nav.parentNode,
+            nextSibling: nav.nextSibling
+        };
+
+        function syncNavHost() {
+            var shouldUseBody = window.innerWidth <= 900;
+
+            if (shouldUseBody && nav.parentNode !== document.body) {
+                document.body.appendChild(nav);
+            }
+
+            if (!shouldUseBody && nav.parentNode === document.body && navHome.parent) {
+                navHome.parent.insertBefore(nav, navHome.nextSibling);
+            }
+        }
+
         function setState(open) {
+            syncNavHost();
             nav.classList.toggle("open", open);
             overlay.classList.toggle("show", open);
             document.body.classList.toggle("menu-open", open);
@@ -214,6 +232,15 @@
                 setState(false);
             });
         });
+
+        window.addEventListener("resize", function () {
+            syncNavHost();
+            if (window.innerWidth > 900) {
+                setState(false);
+            }
+        });
+
+        syncNavHost();
     }
 
     function setupBackToTop() {

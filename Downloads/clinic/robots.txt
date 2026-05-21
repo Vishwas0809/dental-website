@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bhuvneshwaridentalclinic.netlify.app/sitemap.xml
+Sitemap: https://bhuvneshwaridentalclinic.pages.dev/sitemap.xml

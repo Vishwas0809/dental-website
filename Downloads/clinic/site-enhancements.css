@@ -230,7 +230,7 @@ summary:focus-visible {
     position: fixed;
     inset: 0;
     background: rgba(8, 24, 38, 0.48);
-    z-index: 1050;
+    z-index: 1120;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.25s ease;
@@ -1096,6 +1096,11 @@ summary:focus-visible {
 }
 
 @media (max-width: 860px) {
+    .site-nav-wrap {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
     .menu-toggle {
         display: inline-grid;
         place-items: center;
@@ -1103,9 +1108,13 @@ summary:focus-visible {
 
     .site-nav nav {
         position: fixed;
-        top: calc(var(--nav-height) + 10px);
+        top: calc(var(--nav-height) + 10px + env(safe-area-inset-top, 0px));
+        left: 16px;
         right: 16px;
-        width: min(340px, calc(100% - 32px));
+        width: auto;
+        max-height: calc(100dvh - var(--nav-height) - 34px - env(safe-area-inset-top, 0px));
+        overflow-y: auto;
+        overscroll-behavior: contain;
         padding: 22px;
         border-radius: 28px;
         background: rgba(255, 252, 247, 0.96);
@@ -1115,7 +1124,7 @@ summary:focus-visible {
         pointer-events: none;
         transform: translateY(-12px);
         transition: opacity 0.22s ease, transform 0.22s ease;
-        z-index: 1080;
+        z-index: 1140;
     }
 
     .site-nav nav.open {
