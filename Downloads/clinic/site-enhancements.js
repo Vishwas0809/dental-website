@@ -64,6 +64,93 @@
         return /^[6-9]\d{9}$/.test(normalizePhone(value));
     }
 
+    function getLocalDateValue(date) {
+        var year = date.getFullYear();
+        var month = String(date.getMonth() + 1).padStart(2, "0");
+        var day = String(date.getDate()).padStart(2, "0");
+        return year + "-" + month + "-" + day;
+    }
+
+    function getLocalTimeValue(date) {
+        var hours = String(date.getHours()).padStart(2, "0");
+        var minutes = String(date.getMinutes()).padStart(2, "0");
+        return hours + ":" + minutes;
+    }
+
+    function reportFieldError(field, message, status) {
+        if (!field) {
+            return false;
+        }
+
+        field.setCustomValidity(message || "");
+
+        if (message && status) {
+            status.textContent = message;
+        }
+
+        field.scrollIntoView({ behavior: "smooth", block: "center" });
+        field.focus({ preventScroll: true });
+        field.reportValidity();
+        return !message;
+    }
+
+    function syncTimeMinimum(dateInput, timeInput) {
+        if (!dateInput || !timeInput) {
+            return;
+        }
+
+        var now = new Date();
+        if (dateInput.value === getLocalDateValue(now)) {
+            timeInput.min = getLocalTimeValue(now);
+        } else {
+            timeInput.removeAttribute("min");
+        }
+    }
+
+    function updatePreferredDateTimeValidity(dateInput, timeInput) {
+        var now = new Date();
+        var today = getLocalDateValue(now);
+
+        if (dateInput) {
+            dateInput.setCustomValidity("");
+        }
+
+        if (timeInput) {
+            timeInput.setCustomValidity("");
+        }
+
+        if (dateInput && dateInput.value && dateInput.value < today) {
+            dateInput.setCustomValidity("Please choose today or a future date.");
+        }
+
+        if (timeInput && dateInput && dateInput.value === today && timeInput.value && timeInput.value < getLocalTimeValue(now)) {
+            timeInput.setCustomValidity("Please choose a future time for today's appointment.");
+        }
+    }
+
+    function validatePreferredDateTime(dateInput, timeInput, status) {
+        var now = new Date();
+        var today = getLocalDateValue(now);
+
+        if (dateInput) {
+            dateInput.setCustomValidity("");
+
+            if (dateInput.value && dateInput.value < today) {
+                return reportFieldError(dateInput, "Please choose today or a future date.", status);
+            }
+        }
+
+        if (timeInput) {
+            timeInput.setCustomValidity("");
+
+            if (dateInput && dateInput.value === today && timeInput.value && timeInput.value < getLocalTimeValue(now)) {
+                return reportFieldError(timeInput, "Please choose a future time for today's appointment.", status);
+            }
+        }
+
+        return true;
+    }
+
     function openWhatsApp(message) {
         var url = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
         window.open(url, "_blank", "noopener");
@@ -186,23 +273,80 @@
             return;
         }
 
-        var today = new Date().toISOString().split("T")[0];
+        var today = getLocalDateValue(new Date());
 
         forms.forEach(function (form) {
             var dateInput = form.querySelector('input[type="date"]');
+            var timeInput = form.querySelector('input[type="time"]');
             var status = form.querySelector("[data-form-status]");
+            var firstInvalidHandled = false;
 
             if (dateInput) {
                 dateInput.min = today;
             }
 
-            form.querySelectorAll("input, select, textarea").forEach(function (field) {
-                field.addEventListener("invalid", function () {
-                    if (status) {
-                        status.textContent = "Please check the highlighted field before submitting.";
-                    }
+            syncTimeMinimum(dateInput, timeInput);
+
+            form.querySelectorAll('[type="submit"], button:not([type]), button[type="submit"]').forEach(function (button) {
+                button.addEventListener("click", function () {
+                    firstInvalidHandled = false;
                 });
             });
+
+            form.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    firstInvalidHandled = false;
+                }
+            });
+
+            form.querySelectorAll("input, select, textarea").forEach(function (field) {
+                field.addEventListener("invalid", function () {
+                    if (firstInvalidHandled) {
+                        return;
+                    }
+
+                    firstInvalidHandled = true;
+
+                    if (status) {
+                        status.textContent = field.validationMessage || "Please check the highlighted field before submitting.";
+                    }
+
+                    field.scrollIntoView({ behavior: "smooth", block: "center" });
+                    field.focus({ preventScroll: true });
+                });
+
+                field.addEventListener("input", function () {
+                    firstInvalidHandled = false;
+                    field.setCustomValidity("");
+                });
+
+                field.addEventListener("change", function () {
+                    firstInvalidHandled = false;
+                    field.setCustomValidity("");
+                });
+            });
+
+            if (dateInput) {
+                dateInput.addEventListener("change", function () {
+                    dateInput.setCustomValidity("");
+                    syncTimeMinimum(dateInput, timeInput);
+                    updatePreferredDateTimeValidity(dateInput, timeInput);
+                });
+            }
+
+            if (timeInput) {
+                timeInput.addEventListener("input", function () {
+                    timeInput.setCustomValidity("");
+                    syncTimeMinimum(dateInput, timeInput);
+                    updatePreferredDateTimeValidity(dateInput, timeInput);
+                });
+
+                timeInput.addEventListener("change", function () {
+                    timeInput.setCustomValidity("");
+                    syncTimeMinimum(dateInput, timeInput);
+                    updatePreferredDateTimeValidity(dateInput, timeInput);
+                });
+            }
 
             form.querySelectorAll('input[type="tel"]').forEach(function (phoneInput) {
                 phoneInput.addEventListener("input", function () {
@@ -213,12 +357,15 @@
 
             form.addEventListener("submit", function (event) {
                 event.preventDefault();
+                firstInvalidHandled = false;
 
                 var consent = form.querySelector('[name="consent"]');
                 if (consent && !consent.checked) {
-                    if (status) {
-                        status.textContent = "Please consent so we can contact you about your appointment.";
-                    }
+                    reportFieldError(consent, "Please consent so we can contact you about your appointment.", status);
+                    return;
+                }
+
+                if (!validatePreferredDateTime(dateInput, timeInput, status)) {
                     return;
                 }
 
@@ -229,7 +376,7 @@
                     var phoneInput = form.querySelector('input[type="tel"]');
                     if (phoneInput) {
                         phoneInput.setCustomValidity("Enter a valid 10-digit Indian mobile number.");
-                        phoneInput.reportValidity();
+                        reportFieldError(phoneInput, "Enter a valid 10-digit Indian mobile number.", status);
                     }
                     if (status) {
                         status.textContent = "Please enter a valid 10-digit Indian mobile number.";
