@@ -312,11 +312,30 @@
         trackEvent: trackEvent
     };
 
+    function setupWhatsAppLinks() {
+        var message = "Hi, I would like to book an appointment at Bhuvneshwari Dental Clinic, Haridwar.";
+        var encoded = encodeURIComponent(message);
+
+        document.querySelectorAll('a[href*="wa.me/919760867857"]').forEach(function (link) {
+            var href = link.getAttribute("href") || "";
+
+            if (href.indexOf("text=") !== -1) {
+                return;
+            }
+
+            link.setAttribute(
+                "href",
+                href + (href.indexOf("?") === -1 ? "?" : "&") + "text=" + encoded
+            );
+        });
+    }
+
     setupMobileNav();
     setupActiveNav();
     setupBackToTop();
     setupReveal();
     setupTrackables();
     setupLeadForms();
+    setupWhatsAppLinks();
     setCurrentYear();
 })();

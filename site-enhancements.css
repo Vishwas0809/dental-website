@@ -85,7 +85,177 @@ img.doctor-photo{width:100%;max-width:380px;margin-inline:auto;border-radius:8px
 }
 
 .section-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;justify-content:center}
-.patient-showcase figure img{aspect-ratio:4/3;object-fit:cover}
+.photo-frame{aspect-ratio:4/3;width:100%;overflow:hidden;background:var(--soft);position:relative}
+.photo-frame img{width:100%;height:100%;max-width:100%;max-height:none!important;aspect-ratio:unset!important;object-fit:cover;object-position:center center;box-shadow:none;display:block}
+.patient-showcase figure{overflow:hidden;display:flex;flex-direction:column}
+.patient-showcase .photo-frame img[src*="treatingPatient"]{object-position:center 18%}
+.patient-showcase .photo-frame--portrait img{object-position:center 12%}
+@media(max-width:900px){
+ .patient-showcase .photo-frame{aspect-ratio:4/3;min-height:0}
+}
 .topbar{background:linear-gradient(90deg,var(--accent-light),var(--primary))}
 .footer-brand-logo{width:56px;height:56px;border-radius:8px;object-fit:contain;background:#fff;padding:4px;margin-bottom:12px}
 .eyebrow{background:var(--soft);border-color:var(--line);color:var(--primary-dark)}
+
+.booking-bar{background:var(--soft);border-bottom:1px solid var(--line);padding:8px 0}
+.booking-bar-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.booking-bar-label{margin:0;font-size:13px;font-weight:800;color:var(--primary-dark);display:flex;align-items:center;gap:8px}
+.booking-bar-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.btn-compact{min-height:38px;padding:0 14px;font-size:13px;white-space:nowrap}
+.btn-compact.btn-whatsapp{gap:6px}
+.topbar-hours{font-weight:700;white-space:nowrap}
+.topbar-inner{justify-content:space-between;gap:12px}
+.topbar-inner>span:first-child{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn-sm{min-height:40px;padding:0 16px;font-size:13px}
+.card-icon{width:42px;height:42px;border-radius:8px;background:var(--soft);color:var(--primary);display:grid;place-items:center;font-size:18px;margin-bottom:12px}
+.card-grid article{position:relative}
+.testimonial-note{text-align:center;color:var(--muted);font-size:14px;margin:18px 0 0}
+.location-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:stretch}
+.location-info{display:flex;flex-direction:column}
+.location-section .map-embed{aspect-ratio:4/3;max-width:100%;margin-inline:auto}
+.location-list{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:10px;color:var(--muted);font-weight:700}
+.location-list li{display:flex;align-items:center;gap:10px}
+.location-list a{color:var(--primary);font-weight:800}
+.map-embed{position:relative;width:100%;max-width:100%;border-radius:8px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);background:#fff}
+.map-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.clinic-gallery figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);overflow:hidden}
+.clinic-gallery figcaption{padding:12px 14px;font-weight:800;color:#102b35}
+.visual-showcase figure,.photo-grid:not(.patient-showcase):not(.clinic-gallery) figure{overflow:hidden}
+.contact-map-embed{position:relative;width:100%;max-width:480px;margin-top:20px;aspect-ratio:1/1;border-radius:8px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line)}
+.contact-map-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.topbar a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden}
+.skip-link:focus{left:16px;top:12px;width:auto;height:auto;padding:10px 14px;background:#fff;color:var(--primary-dark);z-index:50;border-radius:8px;box-shadow:var(--shadow);font-weight:800}
+@media(max-width:900px){
+ .location-grid{grid-template-columns:1fr}
+}
+
+/* ===== Responsive: phones, tablets, desktops ===== */
+html{
+  -webkit-text-size-adjust:100%;
+  overflow-x:clip;
+}
+body{
+  overflow-x:clip;
+  min-width:0;
+}
+img,video,iframe,svg{max-width:100%;height:auto}
+.brand{min-width:0}
+.brand>span{min-width:0}
+.brand strong,.brand small{overflow-wrap:anywhere}
+.container{width:min(var(--max),calc(100% - 32px))}
+
+/* Fluid grids — no fixed min widths that cause horizontal scroll */
+.hero-grid,.split,.contact-grid,.location-grid{grid-template-columns:minmax(0,1fr)}
+.card-grid,.card-grid.six,.photo-grid,.pill-grid,.step-grid,.testimonial-grid,.footer-grid{grid-template-columns:minmax(0,1fr)}
+
+@media (min-width:480px){
+ .container{width:min(var(--max),calc(100% - 28px))}
+ .pill-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .trust-strip--quad{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .trust-strip--compact{grid-template-columns:repeat(2,minmax(0,1fr));max-width:100%}
+}
+@media (min-width:600px){
+ .card-grid,.card-grid.six{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .photo-grid,.step-grid,.testimonial-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (min-width:768px){
+ .hero-grid,.split,.contact-grid{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)}
+ .location-section .location-grid{grid-template-columns:minmax(0,1.1fr) minmax(240px,320px);align-items:stretch}
+ .location-section .map-embed{aspect-ratio:unset;height:100%;min-height:0;margin:0}
+ .pill-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (min-width:992px){
+ .card-grid,.card-grid.six,.photo-grid,.step-grid,.testimonial-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .footer-grid{grid-template-columns:1.5fr repeat(3,minmax(0,1fr))}
+ .location-section .location-grid{grid-template-columns:minmax(0,1.15fr) minmax(260px,340px)}
+}
+
+/* Header & navigation */
+@media (max-width:900px){
+ .nav-row{gap:10px}
+ .brand strong{font-size:15px;line-height:1.2}
+ .brand small{font-size:10px}
+ .menu-toggle{flex-shrink:0}
+ nav a{padding:4px 0;font-size:15px}
+ .topbar-inner>span:first-child{display:none}
+ .topbar-inner{flex-direction:row;justify-content:center;align-items:center;padding:8px 0}
+ .topbar-hours{font-size:12px;white-space:normal;text-align:center}
+ .booking-bar-inner{justify-content:center;text-align:center}
+ .booking-bar-label{width:100%;justify-content:center}
+ .booking-bar-actions{justify-content:center;width:100%}
+}
+@media (min-width:901px){
+ .menu-toggle{display:none!important}
+ nav{
+  position:static!important;
+  opacity:1!important;
+  pointer-events:auto!important;
+  transform:none!important;
+  display:flex!important;
+  width:auto!important;
+  max-height:none!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+ }
+ .nav-cta{display:inline-flex!important}
+ .mobile-overlay{display:none!important}
+ .mobile-sticky-cta{display:none!important}
+}
+
+/* Small phones */
+@media (max-width:479px){
+ .container{width:min(var(--max),calc(100% - 20px))}
+ .brand-logo{width:40px;height:40px}
+ .brand strong{font-size:13px}
+ .nav-row{min-height:60px}
+ .hero,.page-hero{padding:22px 0 16px}
+ .section{padding:28px 0}
+ .hero-actions,.section-actions,.location-section .hero-actions{flex-direction:column;align-items:stretch}
+ .hero-actions .btn,.section-actions .btn,.location-section .hero-actions .btn,.cta .btn{width:100%}
+ .cta .container{flex-direction:column;align-items:stretch;text-align:center}
+ .cta h2{font-size:1.35rem}
+ .booking-bar{padding:8px 0}
+ .btn-compact{min-height:36px;font-size:12px;padding:0 12px}
+ .mobile-sticky-cta{
+  left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom,0px));
+  padding:8px;padding-bottom:max(8px,env(safe-area-inset-bottom,0px));
+ }
+ .float-whatsapp{
+  right:max(12px,env(safe-area-inset-right,0px));
+  bottom:calc(88px + env(safe-area-inset-bottom,0px));
+  width:52px;height:52px;
+ }
+ .footer{padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}
+ .form-card input,.form-card select,.form-card textarea{font-size:16px}
+ .faq-panel summary{font-size:15px;padding-right:8px}
+ .eyebrow{font-size:11px;padding:6px 10px}
+ .location-section .map-embed{aspect-ratio:4/3;height:auto;min-height:0}
+ .contact-map-embed{max-width:100%;margin-inline:auto}
+ .photo-grid img,.photo-grid figure img{max-height:none}
+}
+
+/* Large screens */
+@media (min-width:1200px){
+ .container{width:min(var(--max),calc(100% - 48px))}
+}
+
+/* Touch-friendly tap targets */
+@media (hover:none) and (pointer:coarse){
+ .btn,.menu-toggle,.float-whatsapp,.float-call,.nav a,.text-link{min-height:44px}
+ .menu-toggle{min-width:44px}
+}
+
+/* Landscape phones — keep menu usable */
+@media (max-height:500px) and (orientation:landscape){
+ nav{max-height:calc(100vh - 72px);overflow-y:auto}
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ .reveal{opacity:1!important;transform:none!important;transition:none!important}
+ .btn:hover{transform:none}
+}
