@@ -1,6 +1,24 @@
 [build]
   publish = "."
 
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/Downloads/clinic"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/Downloads/clinic/*"
+  to = "/:splat"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]
@@ -23,6 +41,11 @@
   for = "*.js"
   [headers.values]
     Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/assets/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
   for = "/sitemap.xml"
