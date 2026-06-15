@@ -1,17 +1,18 @@
 :root {
-  --primary: #0d8a7a;
-  --primary-dark: #065a4e;
-  --accent: #c9953b;
-  --accent-light: #f0dbaa;
-  --ink: #0f1e27;
-  --text: #1a3f3d;
-  --muted: #8a9e9c;
+  --primary: #0a7a6b;
+  --primary-dark: #054a40;
+  --accent: #c9a84c;
+  --accent-light: #f5e6c8;
+  --gold-glow: rgba(201,168,76,.12);
+  --ink: #0a1620;
+  --text: #1a3535;
+  --muted: #7a9492;
   --line: #e5ddd2;
   --soft: #f5efe6;
   --warm: #fcf8f1;
   --surface: #ffffff;
-  --shadow: 0 18px 55px rgba(6,55,46,.12);
-  --shadow-soft: 0 8px 26px rgba(6,55,46,.08);
+  --shadow: 0 18px 55px rgba(6,55,46,.10);
+  --shadow-soft: 0 8px 26px rgba(6,55,46,.06);
   --radius: 12px;
   --spring: cubic-bezier(.34,1.56,.64,1);
   --snap: cubic-bezier(.16,1,.3,1);
@@ -88,7 +89,13 @@ a{color:inherit;text-decoration:none}
 
 /* Gradient text */
 .gradient-text{
-  background:linear-gradient(135deg,var(--primary),var(--accent));
+  background:linear-gradient(135deg,var(--primary-dark),var(--accent));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.gradient-text-accent{
+  background:linear-gradient(135deg,var(--accent),#b08130);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
@@ -210,6 +217,7 @@ nav a.active:after{transform:scaleX(1)}
   background:linear-gradient(135deg,var(--accent),#b08130);
   color:#fff;
 }
+.btn-accent:hover{background:linear-gradient(135deg,#d4b050,var(--accent))}
 .btn-whatsapp{
   background:linear-gradient(135deg,#25d366,#128c42);
   color:#fff;
@@ -272,6 +280,7 @@ nav a.active:after{transform:scaleX(1)}
 .page-hero .hero-media{aspect-ratio:3/2;max-height:340px}
 .hero-media:after{
   content:"";position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 0 1px var(--gold-glow);
   background:linear-gradient(180deg,transparent 50%,rgba(6,90,78,.18));
 }
 
@@ -323,6 +332,7 @@ nav a.active:after{transform:scaleX(1)}
 .section{scroll-margin-top:92px;padding:52px 0;position:relative}
 .section.soft{background:linear-gradient(180deg,var(--soft),rgba(245,239,230,.6))}
 .section-head{max-width:720px;margin-bottom:28px}
+.section-head:after{content:"";display:block;width:50px;height:3px;background:var(--accent-light);border-radius:2px;margin-top:10px}
 .section-head h2{
   font-size:clamp(1.5rem,2.8vw,2.4rem);color:var(--ink);text-wrap:balance;
   margin:0 0 8px;
@@ -348,8 +358,8 @@ nav a.active:after{transform:scaleX(1)}
   display:flex;flex-direction:column;
   background:rgba(255,255,255,.88);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  border:1px solid var(--line);border-radius:var(--radius);
-  padding:24px;box-shadow:var(--shadow-soft);
+  border:1px solid var(--line);border-top:3px solid var(--accent-light);
+  border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-soft);
   transition:transform .3s var(--spring),border-color .3s ease,box-shadow .3s ease;
 }
 .card-grid article:hover{
@@ -385,22 +395,24 @@ nav a.active:after{transform:scaleX(1)}
 .step-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .step-card{
   background:rgba(255,255,255,.88);backdrop-filter:blur(8px);
-  border:1px solid var(--line);border-radius:var(--radius);padding:24px;
+  border:1px solid var(--line);border-top:3px solid var(--accent-light);
+  border-radius:var(--radius);padding:24px;
   box-shadow:var(--shadow-soft);
   transition:transform .3s var(--spring),border-color .3s ease,box-shadow .3s ease;
 }
 .step-card:hover{transform:translateY(-4px);border-color:rgba(13,138,122,.2);box-shadow:0 18px 40px rgba(6,55,46,.1)}
 .step-number{
   width:34px;height:34px;border-radius:50%;
-  background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-  color:#fff;display:grid;place-items:center;font-weight:800;margin-bottom:10px;
+  background:linear-gradient(135deg,var(--accent),#b08130);
+  color:#fff;display:grid;place-items:center;font-weight:800;margin-bottom:10px;font-size:14px;
 }
 
 /* Testimonials */
 .testimonial-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .testimonial{
   background:rgba(255,255,255,.88);backdrop-filter:blur(8px);
-  border:1px solid var(--line);border-radius:var(--radius);padding:24px;
+  border:1px solid var(--line);border-left:3px solid var(--accent-light);
+  border-radius:var(--radius);padding:24px;
   box-shadow:var(--shadow-soft);
   transition:transform .3s var(--spring),border-color .3s ease,box-shadow .3s ease;
 }
@@ -454,6 +466,8 @@ nav a.active:after{transform:scaleX(1)}
 .faq-panel details[open] .faq-answer{grid-template-rows:1fr}
 .faq-panel details .faq-answer>div{overflow:hidden}
 .faq-panel .faq-answer p{margin:10px 0 0;color:var(--text)}
+
+/* Form card */
 
 /* Form card */
 .form-card{
@@ -648,6 +662,7 @@ nav a.active:after{transform:scaleX(1)}
   .brand-logo{width:40px;height:40px}
   .brand strong{font-size:14px}
   .brand small{font-size:9px}
+  .brand>span{display:flex;flex-direction:column;min-width:0}
   .menu-toggle{display:flex;align-items:center;justify-content:center;flex-shrink:0}
   nav a{padding:4px 0;font-size:15px;min-height:44px;display:flex;align-items:center}
   .topbar-inner>span:first-child{display:none}
@@ -679,6 +694,7 @@ nav a.active:after{transform:scaleX(1)}
   .back-to-top{display:none}
   .section-divider{height:36px}
   .section-divider svg{height:36px}
+  .footer{padding-bottom:calc(140px + env(safe-area-inset-bottom,0px))}
 }
 @media(max-width:560px){
   .quick-intent-grid{grid-template-columns:1fr}
@@ -692,6 +708,7 @@ nav a.active:after{transform:scaleX(1)}
   .nav-row{min-height:56px}
   .brand-logo{width:36px;height:36px}
   .brand strong{font-size:13px}
+  .brand small{display:none}
   nav{top:calc(60px + env(safe-area-inset-top,0px))!important;max-height:calc(100dvh - 78px - env(safe-area-inset-top,0px))!important}
   .hero,.page-hero{padding:22px 0 14px}
   .section{padding:28px 0}
@@ -702,7 +719,6 @@ nav a.active:after{transform:scaleX(1)}
   .hero-actions .btn,.section-actions .btn,.location-section .hero-actions .btn{width:100%}
   .trust-strip--quad,.step-grid,.testimonial-grid{grid-template-columns:1fr}
   .photo-grid img,.photo-grid figure img{height:auto}
-  .footer{padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}
   .form-card input,.form-card select,.form-card textarea{font-size:16px}
   .faq-panel summary{font-size:14px}
 }

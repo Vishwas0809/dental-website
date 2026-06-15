@@ -431,7 +431,8 @@
                 var rect = el.getBoundingClientRect();
                 if (rect.top < window.innerHeight && rect.bottom > 0) {
                     var offset = scrollY * 0.15;
-                    el.style.transform = "translateY(" + offset + "px)";
+                    var move = Math.max(-40, offset * -0.3);
+                    el.style.transform = "translateY(" + move + "px)";
                 }
             });
             ticking = false;
