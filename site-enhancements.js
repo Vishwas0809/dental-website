@@ -426,6 +426,7 @@
         var ticking = false;
 
         function update() {
+            if (window.innerWidth < 768) return;
             var scrollY = window.scrollY;
             targets.forEach(function (el) {
                 var rect = el.getBoundingClientRect();
