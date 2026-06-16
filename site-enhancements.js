@@ -273,6 +273,38 @@
         sync();
     }
 
+    function setupImageTreatment() {
+        var imgs = document.querySelectorAll(".hero-media img, .page-hero .hero-media img");
+        if (!imgs.length) return;
+        imgs.forEach(function (img) {
+            if (img.complete) {
+                img.style.transition = "filter .6s ease, opacity .6s ease";
+                img.style.filter = "blur(0)";
+                img.style.opacity = "1";
+            } else {
+                img.style.filter = "blur(8px)";
+                img.style.opacity = ".4";
+                img.style.transition = "filter .6s ease, opacity .6s ease";
+                img.addEventListener("load", function () {
+                    img.style.filter = "blur(0)";
+                    img.style.opacity = "1";
+                });
+            }
+        });
+    }
+
+    function setupHeroEntrance() {
+        var h1 = document.querySelector(".hero-copy h1, .page-hero h1");
+        if (!h1) return;
+        h1.style.opacity = "0";
+        h1.style.transform = "scale(.95)";
+        h1.style.transition = "opacity .7s ease, transform .7s cubic-bezier(.16,1,.3,1)";
+        setTimeout(function () {
+            h1.style.opacity = "1";
+            h1.style.transform = "scale(1)";
+        }, 400);
+    }
+
     function setupSkipLink() {
         var main = document.querySelector("main");
         if (!main) return;
@@ -568,4 +600,6 @@
     setupCounters();
     setupMagneticButtons();
     setupRipple();
+    setupImageTreatment();
+    setupHeroEntrance();
 })();
