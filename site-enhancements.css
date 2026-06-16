@@ -683,7 +683,7 @@ nav a.active:after{transform:scaleX(1)}
   .step-grid,.testimonial-grid{grid-template-columns:1fr 1fr}
   .float-whatsapp{right:16px;bottom:20px;width:50px;height:50px}
   .float-call{right:76px;bottom:20px;width:50px;height:50px}
-  .back-to-top{display:none}
+  .back-to-top{bottom:80px;right:16px}
   .section-divider{height:36px}
   .section-divider svg{height:36px}
   .footer{padding-bottom:calc(140px + env(safe-area-inset-bottom,0px))}
