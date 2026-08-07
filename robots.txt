@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Bhuvneshwari Dental Clinic — Haridwar
+Sitemap: https://bhuvneshwaridentalclinic.pages.dev/sitemap.xml
