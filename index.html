@@ -129,7 +129,18 @@ if (location.pathname === "/index.html") {
 }
 </script>
 </head><body>
+<div class="preloader" aria-hidden="true"><div class="preloader-spinner"></div></div>
 <a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="emergency-banner" id="emergencyBanner">
+  <div class="container">🚨 Dental Emergency? Call us immediately at <a href="tel:+919760867857">+91 97608 67857</a> for urgent care · Open 7 days 9:30 AM – 8 PM</div>
+</div>
+<div class="cookie-banner" id="cookieBanner" role="alert" aria-live="polite">
+  <p>We use cookies to enhance your browsing experience and analyze our traffic. By continuing to use this site, you consent to our use of cookies.</p>
+  <div class="cookie-banner-actions">
+    <button class="cookie-btn cookie-decline" type="button">Decline</button>
+    <button class="cookie-btn cookie-accept" type="button">Accept</button>
+  </div>
+</div>
 <div class="topbar">
   <div class="container topbar-inner">
     <span><i class="fa-solid fa-location-dot"></i> Mamgain Market, Shantikunj Road, Saptrishi, Motichur, Haridwar, Uttarakhand 249411</span>
@@ -154,6 +165,14 @@ if (location.pathname === "/index.html") {
 </header>
 <div class="mobile-overlay" data-mobile-overlay></div>
 <div class="booking-bar"><div class="container booking-bar-inner"><p class="booking-bar-label"><i class="fa-solid fa-calendar-check"></i> Book your visit today</p><div class="booking-bar-actions"><a class="btn btn-primary btn-compact" href="contact.html">Appointment</a><a class="btn btn-whatsapp btn-compact" href="https://wa.me/919760867857" data-track="home_whatsapp_banner"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a></div></div></div>
+<div class="service-quick-access">
+  <div class="container service-quick-access-grid">
+    <a class="service-quick-link" href="dental-implants.html" data-service="implants"><i class="fa-solid fa-tooth"></i><span>Implants</span></a>
+    <a class="service-quick-link" href="root-canal-treatment.html" data-service="root-canal"><i class="fa-solid fa-heart-pulse"></i><span>Root Canal</span></a>
+    <a class="service-quick-link" href="contact.html" data-service="smile-design"><i class="fa-solid fa-face-smile"></i><span>Smile Design</span></a>
+    <a class="service-quick-link" href="tel:+919760867857" data-service="emergency"><i class="fa-solid fa-truck-medical"></i><span>Emergency</span></a>
+  </div>
+</div>
 <main id="main-content">
 <section class="hero"><div class="container hero-grid"><div class="hero-copy reveal"><span class="eyebrow">Trusted Dentist in Haridwar</span><h1>Healthy smiles for your whole family — near Shantikunj.</h1><p>Dr. Shivangi Sharma (BDS) offers gentle dental implants, painless root canal, smile design, and complete family dentistry with clear costs and easy WhatsApp booking.</p><div class="hero-actions"><a class="btn btn-secondary" href="tel:+919760867857"><i class="fa-solid fa-phone"></i> Call +91 97608 67857</a></div><div class="trust-strip trust-strip--quad"><div class="trust-item"><strong>6.5+ yrs</strong><span>Clinical experience</span></div><div class="trust-item"><strong>Near Shantikunj</strong><span>Easy to find</span></div><div class="trust-item"><strong>7 days open</strong><span>9:30 AM – 8 PM daily</span></div><div class="trust-item"><strong>WhatsApp booking</strong><span>Quick replies</span></div></div></div><div class="hero-media reveal"><img src="assets/images/clinic-outside.jpg" alt="Bhuvneshwari Dental Clinic outside view in Haridwar" width="800" height="600" loading="eager" fetchpriority="high" decoding="async"></div></div></section>
 <section class="section doctor-feature"><div class="container split"><div><span class="eyebrow">Meet Your Dentist</span><h2>Dr. Shivangi Sharma — BDS</h2><p>Dr. Shivangi Sharma is the lead dentist and founder of Bhuvneshwari Dental Clinic & Implant Centre in Haridwar. With over 6.5 years of clinical experience, she specialises in dental implants, painless root canal treatment, smile design, and complete family dentistry. Her approach is patient-first — calm consultations, honest treatment options, and a gentle touch that makes even anxious patients feel at ease. Dr. Sharma is available all 7 days from 9:30 AM to 8 PM for appointments and urgent concerns.</p><a class="text-link" href="about.html">Read more about Dr. Shivangi Sharma</a></div><img class="doctor-photo" src="assets/images/doctor-shivangi.jpeg" alt="Dr. Shivangi Sharma BDS, dentist in Haridwar" width="640" height="800" loading="lazy" decoding="async"></div></section>
@@ -178,6 +197,7 @@ if (location.pathname === "/index.html") {
 </footer>
 <a class="float-whatsapp" href="https://wa.me/919760867857" target="_blank" rel="noopener" aria-label="Chat with Bhuvneshwari Dental Clinic on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
 <a class="float-call" href="tel:+919760867857" aria-label="Call Bhuvneshwari Dental Clinic"><i class="fa-solid fa-phone"></i></a>
+<a id="backToTop" class="back-to-top" href="#" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></a>
 <div class="mobile-sticky-cta"><a class="btn btn-secondary" href="tel:+919760867857"><i class="fa-solid fa-phone"></i> Call Now</a><a class="btn btn-whatsapp" href="https://wa.me/919760867857" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a></div>
 <script src="site-enhancements.js"></script>
 </body>
