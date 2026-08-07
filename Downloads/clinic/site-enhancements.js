@@ -112,7 +112,6 @@
             overlay.classList.toggle("show", open);
             document.body.classList.toggle("menu-open", open);
             toggle.setAttribute("aria-expanded", String(open));
-            toggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
         }
 
         toggle.addEventListener("click", function () {
@@ -123,47 +122,10 @@
             setState(false);
         });
 
-        document.addEventListener("keydown", function (event) {
-            if (event.key === "Escape") {
-                setState(false);
-            }
-        });
-
         nav.querySelectorAll("a").forEach(function (link) {
             link.addEventListener("click", function () {
                 setState(false);
             });
-        });
-
-        window.addEventListener("resize", function () {
-            if (window.innerWidth > 900) {
-                setState(false);
-            }
-        });
-    }
-
-    function setupActiveNav() {
-        var links = document.querySelectorAll("nav a");
-        if (!links.length) {
-            return;
-        }
-
-        function normalizePath(value) {
-            return (value || "/")
-                .replace(/\/+$/, "")
-                .replace(/\.html$/, "") || "/";
-        }
-
-        var path = normalizePath(window.location.pathname || "/");
-        var pathTail = path.split("/").pop() || "";
-
-        links.forEach(function (link) {
-            var href = normalizePath(link.getAttribute("href") || "/");
-            var hrefTail = href.split("/").pop() || "";
-            if (href === path || (hrefTail && hrefTail === pathTail)) {
-                link.classList.add("active");
-                link.setAttribute("aria-current", "page");
-            }
         });
     }
 
@@ -312,168 +274,10 @@
         trackEvent: trackEvent
     };
 
-    function setupWhatsAppLinks() {
-        var message = "Hi, I would like to book an appointment at Bhuvneshwari Dental Clinic, Haridwar.";
-        var encoded = encodeURIComponent(message);
-
-        document.querySelectorAll('a[href*="wa.me/919760867857"]').forEach(function (link) {
-            var href = link.getAttribute("href") || "";
-
-            if (href.indexOf("text=") !== -1) {
-                return;
-            }
-
-            link.setAttribute(
-                "href",
-                href + (href.indexOf("?") === -1 ? "?" : "&") + "text=" + encoded
-            );
-        });
-    }
-
-    function setupPreloader() {
-        var preloader = document.querySelector(".preloader");
-        if (!preloader) return;
-
-        window.addEventListener("load", function () {
-            setTimeout(function () {
-                preloader.classList.add("hidden");
-                document.body.style.overflow = "";
-            }, 400);
-        });
-    }
-
-    function setupLazyImages() {
-        var images = document.querySelectorAll('img[loading="lazy"]');
-        if (!images.length || !("IntersectionObserver" in window)) {
-            images.forEach(function (img) {
-                img.classList.add("loaded");
-            });
-            return;
-        }
-
-        var observer = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    var img = entry.target;
-                    if (img.src) {
-                        img.classList.add("loaded");
-                        observer.unobserve(img);
-                    }
-                }
-            });
-        }, { threshold: 0.1 });
-
-        images.forEach(function (img) {
-            observer.observe(img);
-        });
-    }
-
-    function setupCookieBanner() {
-        var banner = document.querySelector(".cookie-banner");
-        var acceptBtn = document.querySelector(".cookie-accept");
-        var declineBtn = document.querySelector(".cookie-decline");
-
-        if (!banner || !acceptBtn) return;
-
-        var hasConsent = localStorage.getItem("cookieConsent");
-        if (!hasConsent) {
-            setTimeout(function () {
-                banner.classList.add("show");
-            }, 1500);
-        }
-
-        if (acceptBtn) {
-            acceptBtn.addEventListener("click", function () {
-                localStorage.setItem("cookieConsent", "accepted");
-                banner.classList.remove("show");
-                trackEvent("cookie_accepted", { page: window.location.pathname });
-            });
-        }
-
-        if (declineBtn) {
-            declineBtn.addEventListener("click", function () {
-                localStorage.setItem("cookieConsent", "declined");
-                banner.classList.remove("show");
-                trackEvent("cookie_declined", { page: window.location.pathname });
-            });
-        }
-    }
-
-    function setupEmergencyBanner() {
-        var banner = document.querySelector(".emergency-banner");
-        if (!banner) return;
-
-        var closeButton = banner.querySelector(".emergency-banner-close");
-        if (closeButton) {
-            closeButton.addEventListener("click", function () {
-                banner.classList.remove("show");
-            });
-        }
-    }
-
-    function setupServiceQuickAccess() {
-        var quickAccess = document.querySelector(".service-quick-access");
-        if (!quickAccess) return;
-
-        var links = quickAccess.querySelectorAll(".service-quick-link");
-        links.forEach(function (link) {
-            link.addEventListener("click", function () {
-                trackEvent("service_quick_access_click", {
-                    service: link.getAttribute("data-service"),
-                    page: window.location.pathname
-                });
-            });
-        });
-    }
-
-    function setupSmoothScroll() {
-        document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
-            anchor.addEventListener("click", function (e) {
-                var targetId = this.getAttribute("href");
-                if (targetId === "#") return;
-
-                var target = document.querySelector(targetId);
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
-            });
-        });
-    }
-
-    function setupBackToTopEnhanced() {
-        var button = document.getElementById("backToTop");
-        if (!button) return;
-
-        var scrollTimeout;
-        function sync() {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(function () {
-                button.classList.toggle("show", window.scrollY > 480);
-            }, 100);
-        }
-
-        window.addEventListener("scroll", sync, { passive: true });
-        button.addEventListener("click", function () {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-            trackEvent("back_to_top_click", { page: window.location.pathname });
-        });
-        sync();
-    }
-
     setupMobileNav();
-    setupActiveNav();
     setupBackToTop();
-    setupBackToTopEnhanced();
     setupReveal();
     setupTrackables();
     setupLeadForms();
-    setupWhatsAppLinks();
     setCurrentYear();
-    setupPreloader();
-    setupLazyImages();
-    setupCookieBanner();
-    setupEmergencyBanner();
-    setupServiceQuickAccess();
-    setupSmoothScroll();
 })();
